@@ -1,0 +1,536 @@
+/* src/admin/components/AdminStyles.css */
+
+/* Variables de couleurs */
+:root {
+  --primary-green: #7fcc72; /* Votre couleur principale */
+  --dark-green: #6cb862; /* Vert plus foncé pour le survol */
+  
+  /* Nouvelles couleurs pour une interface plus douce */
+  --light-gray-bg: #f8f9fa; /* Fond très clair pour le corps et les survols */
+  --medium-gray-border: #e9ecef; /* Bordures plus douces */
+  --dark-text: #343a40; /* Texte principal (presque noir, mais plus doux) */
+  --secondary-text: #6c757d; /* Texte secondaire (gris moyen) */
+  --card-bg: #ffffff; /* Fond des cartes et modales blanc pur */
+  
+  /* Ombres */
+  --box-shadow-light: 0 2px 10px rgba(0, 0, 0, 0.05); /* Ombre très légère */
+  --box-shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08); /* Ombre moyenne */
+  --box-shadow-hover: 0 5px 15px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée au survol */
+
+  /* Couleurs des boutons */
+  --btn-primary: var(--primary-green);
+  --btn-primary-hover: var(--dark-green);
+  --btn-delete: #dc3545; /* Rouge standard pour supprimer */
+  --btn-delete-hover: #c82333;
+  --btn-details: #007bff; /* Bleu standard pour les détails */
+  --btn-details-hover: #0056b3;
+  --btn-edit: #ffc107; /* Jaune-orange pour modifier */
+  --btn-edit-hover: #e0a800;
+  --btn-link: #17a2b8; /* Bleu-vert pour les liens CV/LM */
+  --btn-link-hover: #138496;
+}
+
+/* Styles généraux pour le tableau de bord admin */
+.admin-layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--light-gray-bg);
+  font-family: 'Inter', sans-serif;
+  color: var(--dark-text);
+}
+
+/* Styles de la Navbar */
+.admin-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-green);
+  color: white;
+  padding: 15px 30px;
+  box-shadow: var(--box-shadow-medium);
+  border-radius: 0;
+}
+
+.navbar-logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+}
+
+.navbar-logo span {
+  color: white; /* Conserver la même couleur que le reste du logo */
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espace entre les liens */
+}
+
+.admin-navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.admin-navbar a:hover, .admin-navbar a.active {
+  background-color: var(--dark-green);
+}
+
+.nav-link-add {
+  background-color: white;
+  color: var(--primary-green) !important; /* Utilise !important pour annuler les styles par défaut des liens */
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  box-shadow: var(--box-shadow-light);
+}
+
+.nav-link-add:hover {
+  background-color: var(--light-gray-bg);
+}
+
+/* Styles du contenu principal de l'admin */
+.admin-main {
+  flex-grow: 1;
+  padding: 30px;
+  background-color: var(--light-gray-bg);
+}
+
+.admin-content h1 {
+  font-size: 36px;
+  color: var(--dark-text);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.admin-content p {
+  font-size: 18px;
+  color: var(--secondary-text);
+  margin-bottom: 30px;
+}
+
+/* Styles des boîtes du tableau de bord */
+.dashboard-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.dashboard-boxes .box {
+  background-color: var(--card-bg);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow-light);
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--dark-text);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+  border: 1px solid var(--medium-gray-border);
+}
+
+.dashboard-boxes .box:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--box-shadow-hover);
+}
+
+/* Couleurs spécifiques pour chaque boîte */
+.dashboard-boxes .box.green { background-color: #4CAF50; color: white; }
+.dashboard-boxes .box.blue { background-color: #2196F3; color: white; }
+.dashboard-boxes .box.purple { background-color: #9C27B0; color: white; }
+.dashboard-boxes .box.orange { background-color: #FF9800; color: white; }
+
+/* Styles pour les listes (Offres, Actualités, Messages) */
+.admin-list, .job-list-admin {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow-medium);
+  overflow: hidden;
+}
+
+/* Styles pour les éléments de liste (li) */
+.admin-list li, .job-list-admin li {
+  padding: 18px 25px;
+  border-bottom: 1px solid var(--medium-gray-border);
+  display: flex; 
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  line-height: 1.5; 
+}
+
+.admin-list li:last-child, .job-list-admin li:last-child {
+  border-bottom: none;
+}
+
+.admin-list li:hover, .job-list-admin li:hover {
+  background-color: var(--light-gray-bg);
+}
+
+/* Conteneur pour le texte principal dans les listes (titre, localisation, etc.) */
+.admin-list li .list-text-content, .job-list-admin li .list-text-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1;
+  margin-right: 15px;
+}
+
+.admin-list li strong, .job-list-admin li strong {
+  color: var(--dark-text);
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.admin-list li p {
+  margin-bottom: 4px;
+  color: var(--secondary-text);
+  font-size: 15px;
+}
+
+.admin-list li p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Conteneur pour les boutons d'action dans les listes */
+.admin-list li .list-action-buttons, .job-list-admin li .list-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+
+/* Styles pour les boutons d'action */
+.add-button, .edit, .delete, .view-details-btn, .view-link {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.add-button:hover {
+  background-color: var(--btn-primary-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.edit {
+  background-color: var(--btn-edit);
+  color: var(--dark-text);
+}
+
+.edit:hover {
+  background-color: var(--btn-edit-hover);
+  transform: translateY(-2px);
+}
+
+.delete {
+  background-color: var(--btn-delete);
+  color: white;
+}
+
+.delete:hover {
+  background-color: var(--btn-delete-hover);
+  transform: translateY(-2px);
+}
+
+/* Styles pour le bouton "Voir détails" */
+.view-details-btn {
+  background-color: var(--btn-details);
+  color: white;
+}
+
+.view-details-btn:hover {
+  background-color: var(--btn-details-hover);
+  transform: translateY(-2px);
+}
+
+/* Styles pour les liens "Voir CV/LM" */
+.view-link {
+  background-color: var(--btn-link);
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.view-link:hover {
+  background-color: var(--btn-link-hover);
+  text-decoration: none;
+}
+
+/* Styles pour la date de candidature */
+.application-date {
+  font-size: 0.85em;
+  color: var(--secondary-text);
+  margin-top: 5px;
+}
+
+/* Ajustement pour les messages de non-contenu */
+.no-content-message {
+  text-align: center;
+  padding: 20px;
+  color: var(--secondary-text);
+  font-style: italic;
+}
+
+/* Styles pour le spinner de chargement */
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--primary-green);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Styles pour la modale (popup) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: var(--box-shadow-hover);
+  width: 90%;
+  max-width: 650px;
+  position: relative;
+  max-height: 85vh;
+  overflow-y: auto;
+  color: var(--dark-text);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: var(--secondary-text);
+  transition: color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  color: var(--dark-text);
+}
+
+.modal-content h3 {
+  font-size: 28px;
+  color: var(--dark-text);
+  margin-bottom: 25px;
+  text-align: center;
+  border-bottom: 2px solid var(--primary-green);
+  padding-bottom: 15px;
+}
+
+.modal-content p {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: var(--secondary-text);
+  line-height: 1.6;
+}
+
+.modal-content p strong {
+  color: var(--dark-text);
+  font-weight: 600;
+}
+
+/* Styles pour les formulaires d'ajout/édition dans l'admin (NewsList, JobListAdmin) */
+.news-form, .job-form { 
+  background-color: var(--card-bg);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow-light);
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: 1px solid var(--medium-gray-border);
+}
+
+.news-form .form-group, .job-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.news-form label, .job-form label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: var(--dark-text);
+}
+
+.news-form input,
+.news-form textarea,
+.news-form select,
+.job-form input,
+.job-form select,
+.job-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--medium-gray-border);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--dark-text);
+  background-color: var(--light-gray-bg);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-form input:focus,
+.news-form textarea:focus,
+.news-form select:focus,
+.job-form input:focus,
+.job-form select:focus,
+.job-form textarea:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(127, 204, 114, 0.3);
+  outline: none;
+  background-color: white;
+}
+
+.news-form button, .job-form button {
+  align-self: flex-start;
+  margin-top: 15px;
+}
+
+
+/* Ajustements responsives pour la modale et le layout général */
+@media (max-width: 768px) {
+  .admin-dashboard {
+    flex-direction: column;
+  }
+
+  .admin-navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 15px;
+  }
+  
+  .navbar-links a {
+    width: 100%;
+    text-align: left;
+  }
+
+  .navbar-add-offer {
+    width: 100%;
+    margin-top: 15px;
+  }
+  
+  .navbar-add-offer a {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .admin-main {
+    margin: 15px;
+    padding: 20px;
+  }
+
+  .admin-content h1 {
+    font-size: 28px;
+  }
+
+  .dashboard-boxes {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-list li, .job-list-admin li {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .admin-list li .list-action-buttons, .job-list-admin li .list-action-buttons {
+    margin-top: 10px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .modal-content {
+    padding: 20px;
+    width: 95%;
+  }
+
+  .modal-close-btn {
+    font-size: 24px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .modal-content h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .modal-content p {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  /* Ajustements pour les formulaires en mobile */
+  .news-form, .job-form {
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .news-form input, .news-form textarea, .news-form select,
+  .job-form input, .job-form select, .job-form textarea {
+    padding: 10px;
+    font-size: 15px;
+  }
+}

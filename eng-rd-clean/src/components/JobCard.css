@@ -1,0 +1,103 @@
+/* Import de la police "Poppins" de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Style de base pour la carte individuelle */
+.job-card {
+    background-color: white;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    width: 100%;
+    max-width: 350px; /* Taille maximale pour une carte */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Pour positionner le badge */
+    min-height: 200px; /* Hauteur minimale pour un meilleur affichage */
+}
+
+.job-card:hover {
+    transform: translateY(-5px); /* Effet de survol */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Style pour le badge du type de contrat (CDI, Freelance...) */
+.job-type-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+/* Style du titre du poste */
+.job-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    margin-top: 10px; /* Espace sous le badge */
+}
+
+/* Style de la localisation */
+.job-card p {
+    font-size: 1rem;
+    color: #666;
+    margin: 5px 0 20px 0;
+}
+
+/* Conteneur des boutons */
+.job-card-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: auto; /* Pour pousser les boutons vers le bas de la carte */
+}
+
+/* Style général des boutons */
+.job-card-buttons button {
+    flex: 1; /* Pour que les boutons occupent l'espace disponible */
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    padding: 12px 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Style pour le bouton "Voir plus" */
+.job-card-buttons button:first-child {
+    background-color: #7fcc72; /* Couleur de la marque */
+    color: white;
+}
+
+.job-card-buttons button:first-child:hover {
+    background-color: #69b362;
+    transform: translateY(-2px);
+}
+
+/* Style pour le bouton "Postuler" */
+.job-card-buttons button:last-child:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+/* Responsivité pour les petits écrans */
+@media (max-width: 480px) {
+    .job-card {
+        padding: 25px;
+    }
+
+    .job-card-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
