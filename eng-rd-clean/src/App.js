@@ -2,6 +2,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+// Authentication
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+
 // Composants de mise en page
 import Layout from "./components/Layout"; // Nouveau layout public
 import AdminLayout from "./admin/components/AdminLayout"; // Layout admin
@@ -24,39 +28,47 @@ import ContactList from "./admin/components/ContactList";
 import NewsList from "./admin/components/NewsList";
 import AddJobForm from "./admin/components/AddJobForm";
 import EditJobForm from "./admin/components/EditJobForm";
+import HomeContentEditor from "./admin/components/HomeContentEditor";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Les routes publiques */}
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="jobs" element={<Jobs />} />
-          <Route path="apply" element={<Apply />} />
-          <Route path="apply/:id" element={<ApplyToOffer />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="jobs/:id" element={<JobDetails />} />
-          <Route path="news" element={<Actualites />} />
-          <Route path="news/:id" element={<NewsDetail />} />
-        </Route>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Les routes publiques */}
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="jobs" element={<Jobs />} />
+            <Route path="apply" element={<Apply />} />
+            <Route path="apply/:id" element={<ApplyToOffer />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="jobs/:id" element={<JobDetails />} />
+            <Route path="news" element={<Actualites />} />
+            <Route path="news/:id" element={<NewsDetail />} />
+          </Route>
 
-        {/* La route de connexion à l'administration */}
-        <Route path="/admin" element={<AdminLogin />} />
+          {/* La route de connexion à l'administration */}
+          <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* Les routes d'administration sont imbriquées dans le composant AdminLayout */}
-        <Route path="/admin" element={<AdminLayout />}>
-          {/* L'ancien index (dashboard) est supprimé. La page 'jobs' devient la page par défaut */}
-          <Route index element={<JobListAdmin />} /> 
-          <Route path="jobs" element={<JobListAdmin />} />
-          <Route path="applications" element={<ApplicationList />} />
-          <Route path="messages" element={<ContactList />} />
-          <Route path="news" element={<NewsList />} />
-          <Route path="jobs/add" element={<AddJobForm />} />
-          <Route path="jobs/edit/:id" element={<EditJobForm />} />
-        </Route>
-      </Routes>
-    </Router>
+          {/* Les routes d'administration protégées */}
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }>
+            {/* Jobs par défaut */}
+            <Route index element={<JobListAdmin />} /> 
+            <Route path="jobs" element={<JobListAdmin />} />
+            <Route path="applications" element={<ApplicationList />} />
+            <Route path="messages" element={<ContactList />} />
+            <Route path="news" element={<NewsList />} />
+            <Route path="home-content" element={<HomeContentEditor />} />
+            <Route path="jobs/add" element={<AddJobForm />} />
+            <Route path="jobs/edit/:id" element={<EditJobForm />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

@@ -50,6 +50,7 @@
   padding: 15px 30px;
   box-shadow: var(--box-shadow-medium);
   border-radius: 0;
+  gap: 20px;
 }
 
 .navbar-logo {
@@ -96,6 +97,37 @@
 
 .nav-link-add:hover {
   background-color: var(--light-gray-bg);
+}
+
+/* User section in navbar */
+.navbar-user-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-welcome {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.logout-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
 }
 
 /* Styles du contenu principal de l'admin */
@@ -298,9 +330,157 @@
 /* Ajustement pour les messages de non-contenu */
 .no-content-message {
   text-align: center;
-  padding: 20px;
+  padding: 40px 20px;
   color: var(--secondary-text);
   font-style: italic;
+  font-size: 18px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow-light);
+  border: 1px solid var(--medium-gray-border);
+}
+
+/* Styles pour la grille des messages */
+.messages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Styles pour les cartes de messages */
+.message-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow-light);
+  border: 1px solid var(--medium-gray-border);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.message-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-medium);
+}
+
+/* En-tête de la carte message */
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--medium-gray-border);
+}
+
+.sender-info {
+  flex-grow: 1;
+}
+
+.sender-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dark-text);
+  margin: 0 0 5px 0;
+}
+
+.sender-email {
+  font-size: 14px;
+  color: var(--secondary-text);
+  margin: 0;
+}
+
+.message-date {
+  font-size: 12px;
+  color: var(--secondary-text);
+  background-color: var(--light-gray-bg);
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* Contenu de la carte message */
+.message-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message-subject {
+  font-size: 15px;
+  color: var(--dark-text);
+}
+
+.message-subject strong {
+  color: var(--primary-green);
+  font-weight: 600;
+}
+
+.message-preview {
+  font-size: 14px;
+  color: var(--secondary-text);
+  line-height: 1.5;
+}
+
+.message-preview strong {
+  color: var(--dark-text);
+  font-weight: 600;
+}
+
+/* Actions de la carte message */
+.message-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid var(--medium-gray-border);
+}
+
+/* Styles pour les détails complets du message dans la modal */
+.message-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.message-details p {
+  margin: 0;
+  font-size: 16px;
+  color: var(--secondary-text);
+}
+
+.message-details p strong {
+  color: var(--dark-text);
+  font-weight: 600;
+  display: inline-block;
+  min-width: 80px;
+}
+
+.full-message {
+  margin-top: 20px;
+}
+
+.full-message strong {
+  color: var(--dark-text);
+  font-weight: 600;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.message-text {
+  background-color: var(--light-gray-bg);
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-green);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--dark-text);
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 /* Styles pour le spinner de chargement */
@@ -436,9 +616,122 @@
   background-color: white;
 }
 
+/* Restrict textarea resize to vertical only */
+.news-form textarea,
+.job-form textarea {
+  resize: vertical;
+}
+
+/* Toast Notification Styles */
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 300px;
+  max-width: 500px;
+  animation: slideInRight 0.3s ease-out;
+}
+
+.toast-notification.success {
+  background-color: #28a745;
+}
+
+.toast-notification.error {
+  background-color: #dc3545;
+}
+
+.toast-notification.info {
+  background-color: #17a2b8;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 15px;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .news-form button, .job-form button {
   align-self: flex-start;
   margin-top: 15px;
+}
+
+/* Styles pour les boutons de la modale */
+.modal-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid var(--medium-gray-border);
+}
+
+.save-button {
+  background-color: var(--btn-primary);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.save-button:hover {
+  background-color: var(--btn-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.cancel-button {
+  background-color: var(--secondary-text);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 
@@ -452,13 +745,14 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 15px;
+    gap: 15px;
   }
 
   .navbar-links {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    margin-top: 15px;
+    gap: 10px;
   }
   
   .navbar-links a {
@@ -466,14 +760,20 @@
     text-align: left;
   }
 
-  .navbar-add-offer {
+  .navbar-user-section {
     width: 100%;
-    margin-top: 15px;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
   }
-  
-  .navbar-add-offer a {
-    width: 100%;
-    justify-content: center;
+
+  .user-welcome {
+    font-size: 13px;
+  }
+
+  .logout-button {
+    padding: 6px 12px;
+    font-size: 13px;
   }
 
   .admin-main {
@@ -532,5 +832,397 @@
   .job-form input, .job-form select, .job-form textarea {
     padding: 10px;
     font-size: 15px;
+  }
+
+  /* Ajustements pour les boutons de modale en mobile */
+  .modal-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .save-button, .cancel-button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  /* Toast notification responsive */
+  .toast-notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+  }
+
+  /* Messages grid responsive */
+  .messages-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .message-card {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .message-header {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .message-date {
+    align-self: flex-end;
+  }
+
+  .sender-name {
+    font-size: 16px;
+  }
+
+  .sender-email {
+    font-size: 13px;
+  }
+
+  .message-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .message-actions button {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Message details modal responsive */
+  .message-details p {
+    font-size: 15px;
+  }
+
+  .message-text {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+/* Login Page Styles */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+  padding: 20px;
+}
+
+.login-form-wrapper {
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid var(--medium-gray-border);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-header h2 {
+  font-size: 28px;
+  color: var(--dark-text);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.login-header p {
+  color: var(--secondary-text);
+  font-size: 16px;
+  margin: 0;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-form label {
+  font-weight: 600;
+  color: var(--dark-text);
+  font-size: 14px;
+}
+
+.login-form input {
+  padding: 14px 16px;
+  border: 2px solid var(--medium-gray-border);
+  border-radius: 10px;
+  font-size: 16px;
+  color: var(--dark-text);
+  background-color: var(--light-gray-bg);
+  transition: all 0.3s ease;
+}
+
+.login-form input:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(127, 204, 114, 0.2);
+  outline: none;
+  background-color: white;
+}
+
+.login-form input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-button {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.login-button:hover:not(:disabled) {
+  background-color: var(--dark-green);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(127, 204, 114, 0.4);
+}
+
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-left-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.error-message {
+  background-color: #fee;
+  color: #c53030;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #fed7d7;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Loading container for protected routes */
+.loading-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light-gray-bg);
+  gap: 20px;
+}
+
+.loading-container p {
+  color: var(--secondary-text);
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Responsive login styles */
+@media (max-width: 480px) {
+  .login-form-wrapper {
+    padding: 30px 20px;
+    margin: 10px;
+  }
+  
+  .login-header h2 {
+    font-size: 24px;
+  }
+  
+  .login-form input {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+  
+  .login-button {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+/* Styles pour l'éditeur de contenu */
+.section-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #f8f9fa;
+  color: #495057;
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tab-button:hover {
+  background-color: #e9ecef;
+}
+
+.tab-button.active {
+  background-color: var(--primary-green);
+  color: white;
+}
+
+.content-editor {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow-light);
+  border: 1px solid var(--medium-gray-border);
+}
+
+.content-editor h3 {
+  color: var(--dark-text);
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--primary-green);
+  padding-bottom: 10px;
+  font-size: 24px;
+}
+
+.content-editor h4 {
+  color: var(--secondary-text);
+  margin: 20px 0 10px 0;
+  font-size: 18px;
+}
+
+.content-editor .form-group {
+  margin-bottom: 15px;
+}
+
+.content-editor .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--dark-text);
+  font-size: 14px;
+}
+
+.content-editor .form-group input,
+.content-editor .form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--medium-gray-border);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--dark-text);
+  background-color: var(--light-gray-bg);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.content-editor .form-group input:focus,
+.content-editor .form-group textarea:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(127, 204, 114, 0.2);
+  outline: none;
+  background-color: white;
+}
+
+.content-editor .form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.content-editor .card-editor {
+  background-color: var(--light-gray-bg);
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-green);
+  border: 1px solid var(--medium-gray-border);
+}
+
+.content-editor .btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.content-editor .btn-primary {
+  background-color: var(--primary-green);
+  color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.content-editor .btn-primary:hover:not(:disabled) {
+  background-color: var(--dark-green);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.content-editor .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive styles for content editor */
+@media (max-width: 768px) {
+  .section-tabs {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .tab-button {
+    width: 100%;
+    text-align: center;
+    border-radius: 5px;
+  }
+  
+  .content-editor {
+    padding: 15px;
+  }
+  
+  .content-editor h3 {
+    font-size: 20px;
+  }
+  
+  .content-editor .card-editor {
+    padding: 12px;
   }
 }

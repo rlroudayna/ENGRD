@@ -1,6 +1,6 @@
 // src/admin/components/AddJobForm.jsx
 import React, { useState } from 'react';
-import axios from 'axios';
+import { adminClient } from '../../utils/axiosConfig';
 import './AdminStyles.css';
 
 export default function AddJobForm() {
@@ -12,7 +12,7 @@ export default function AddJobForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/admin/jobs', form);
+      await adminClient.post('/admin/jobs', form);
       setMessage('Offre ajoutée avec succès !');
       setForm({ title: '', location: '', type: '', description: '' }); // Réinitialiser le formulaire
     } catch (error) {

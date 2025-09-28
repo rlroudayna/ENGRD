@@ -1,6 +1,6 @@
 // src/admin/components/JobListAdmin.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { adminClient } from '../../utils/axiosConfig';
 import { Link } from 'react-router-dom';
 import './AdminStyles.css'; // Assurez-vous que ce fichier existe
 
@@ -12,7 +12,7 @@ export default function JobListAdmin() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/admin/jobs');
+        const response = await adminClient.get('/admin/jobs');
         setJobs(response.data);
       } catch (err) {
         console.error("Erreur lors de la récupération des offres :", err);
@@ -28,7 +28,7 @@ export default function JobListAdmin() {
   const handleDelete = async (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette offre ?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/jobs/${id}`);
+        await adminClient.delete(`/admin/jobs/${id}`);
         setJobs(jobs.filter(job => job._id !== id)); // Met à jour la liste après suppression
         alert("Offre supprimée avec succès !"); 
       } catch (err) {

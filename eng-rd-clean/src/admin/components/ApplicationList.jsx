@@ -1,6 +1,6 @@
 // src/admin/components/ApplicationList.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { adminClient } from '../../utils/axiosConfig';
 import './AdminStyles.css'; // Assurez-vous que ce fichier existe
 
 export default function ApplicationList() {
@@ -12,7 +12,13 @@ export default function ApplicationList() {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/admin/applications');
+        const response = await adminClient.get('/admin/applications');
+        console.log('Frontend received applications:', response.data.map(app => ({
+          name: app.firstName + ' ' + app.lastName,
+          jobId: app.jobId,
+          job: app.job,
+          jobTitle: app.job ? app.job.title : 'null'
+        })));
         setApplications(response.data);
       } catch (err) {
         console.error("Erreur lors de la récupération des candidatures (frontend) :", err);
@@ -34,7 +40,7 @@ export default function ApplicationList() {
   const handleDelete = async (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette candidature ?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/applications/${id}`);
+        await adminClient.delete(`/admin/applications/${id}`);
         setApplications(applications.filter(app => app._id !== id));
         alert("Candidature supprimée avec succès !");
       } catch (err) {

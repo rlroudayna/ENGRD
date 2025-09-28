@@ -1,7 +1,8 @@
 // src/admin/components/EditJobForm.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { adminClient } from '../../utils/axiosConfig';
+import axios from 'axios'; // Keep regular axios for public job fetching
 import './AdminStyles.css';
 
 export default function EditJobForm() {
@@ -20,7 +21,7 @@ export default function EditJobForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/admin/jobs/${id}`, form);
+      await adminClient.put(`/admin/jobs/${id}`, form);
       setMessage('Offre mise à jour avec succès !');
     } catch (error) {
       console.error("Erreur lors de la mise à jour de l'offre:", error);
