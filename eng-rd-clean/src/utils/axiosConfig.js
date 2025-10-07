@@ -10,7 +10,7 @@ const publicClient = axios.create({
 // Create admin axios instance (auth required)
 const adminClient = axios.create({
   baseURL: 'http://localhost:5000/api',
-  timeout: 10000,
+  timeout: 30000, // 30 seconds default timeout
 });
 
 // Request interceptor for admin client to add auth token

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { adminClient } from '../../utils/axiosConfig';
+import VideoUpload from './VideoUpload';
+import ImageUpload from './ImageUpload';
 import './AdminStyles.css';
 
 const HomeContentEditor = () => {
@@ -149,27 +151,34 @@ const HomeContentEditor = () => {
         
         <h4>Images et Médias:</h4>
         <div className="card-editor">
+          <VideoUpload
+            currentVideoUrl={heroContent.heroVideo?.url || heroContent.heroVideo || ''}
+            onVideoUploaded={(url) => setContent(prev => ({
+              ...prev,
+              hero: { 
+                ...heroContent, 
+                heroVideo: typeof heroContent.heroVideo === 'object' 
+                  ? { ...heroContent.heroVideo, url: url }
+                  : { url: url, alt: "Vidéo de présentation héro" }
+              }
+            }))}
+            onVideoRemoved={() => setContent(prev => ({
+              ...prev,
+              hero: { 
+                ...heroContent, 
+                heroVideo: typeof heroContent.heroVideo === 'object' 
+                  ? { ...heroContent.heroVideo, url: '' }
+                  : { url: '', alt: "Vidéo de présentation héro" }
+              }
+            }))}
+            label="Vidéo Héro"
+          />
           <div className="form-group">
-            <label>URL de la vidéo héro:</label>
-            <input
-              type="text"
-              value={heroContent.heroVideo?.url || heroContent.heroVideo || ''}
-              onChange={(e) => setContent(prev => ({
-                ...prev,
-                hero: { 
-                  ...heroContent, 
-                  heroVideo: typeof heroContent.heroVideo === 'object' 
-                    ? { ...heroContent.heroVideo, url: e.target.value }
-                    : { url: e.target.value, alt: "Vidéo de présentation" }
-                }
-              }))}
-            />
-          </div>
-          <div className="form-group">
-            <label>Texte alternatif de la vidéo:</label>
+            <label>Texte alternatif de la vidéo héro:</label>
             <input
               type="text"
               value={heroContent.heroVideo?.alt || ''}
+              placeholder="Vidéo de présentation héro"
               onChange={(e) => setContent(prev => ({
                 ...prev,
                 hero: { 
@@ -184,27 +193,34 @@ const HomeContentEditor = () => {
         </div>
         
         <div className="card-editor">
+          <VideoUpload
+            currentVideoUrl={heroContent.teamworkImage?.url || heroContent.teamworkImage || ''}
+            onVideoUploaded={(url) => setContent(prev => ({
+              ...prev,
+              hero: { 
+                ...heroContent, 
+                teamworkImage: typeof heroContent.teamworkImage === 'object' 
+                  ? { ...heroContent.teamworkImage, url: url }
+                  : { url: url, alt: "Vidéo équipe au travail", link: "/contact" }
+              }
+            }))}
+            onVideoRemoved={() => setContent(prev => ({
+              ...prev,
+              hero: { 
+                ...heroContent, 
+                teamworkImage: typeof heroContent.teamworkImage === 'object' 
+                  ? { ...heroContent.teamworkImage, url: '' }
+                  : { url: '', alt: "Vidéo équipe au travail", link: "/contact" }
+              }
+            }))}
+            label="Vidéo Teamwork"
+          />
           <div className="form-group">
-            <label>URL de l'image teamwork:</label>
-            <input
-              type="text"
-              value={heroContent.teamworkImage?.url || heroContent.teamworkImage || ''}
-              onChange={(e) => setContent(prev => ({
-                ...prev,
-                hero: { 
-                  ...heroContent, 
-                  teamworkImage: typeof heroContent.teamworkImage === 'object' 
-                    ? { ...heroContent.teamworkImage, url: e.target.value }
-                    : { url: e.target.value, alt: "Équipe au travail", link: "/contact" }
-                }
-              }))}
-            />
-          </div>
-          <div className="form-group">
-            <label>Texte alternatif de l'image:</label>
+            <label>Texte alternatif de la vidéo:</label>
             <input
               type="text"
               value={heroContent.teamworkImage?.alt || ''}
+              placeholder="Vidéo équipe au travail"
               onChange={(e) => setContent(prev => ({
                 ...prev,
                 hero: { 
@@ -217,7 +233,7 @@ const HomeContentEditor = () => {
             />
           </div>
           <div className="form-group">
-            <label>Lien de l'image (optionnel):</label>
+            <label>Lien de la vidéo (optionnel):</label>
             <input
               type="text"
               value={heroContent.teamworkImage?.link || ''}
@@ -228,7 +244,7 @@ const HomeContentEditor = () => {
                   ...heroContent, 
                   teamworkImage: typeof heroContent.teamworkImage === 'object' 
                     ? { ...heroContent.teamworkImage, link: e.target.value }
-                    : { url: heroContent.teamworkImage || '', alt: "Équipe au travail", link: e.target.value }
+                    : { url: heroContent.teamworkImage || '', alt: "Vidéo équipe au travail", link: e.target.value }
                 }
               }))}
             />
@@ -615,14 +631,13 @@ const HomeContentEditor = () => {
                 onChange={(e) => updateTransportCard(index, 'name', e.target.value)}
               />
             </div>
-            <div className="form-group">
-              <label>URL de l'image:</label>
-              <input
-                type="text"
-                value={card.image?.url || ''}
-                onChange={(e) => updateTransportCard(index, 'url', e.target.value)}
-              />
-            </div>
+            <ImageUpload
+              currentImageUrl={card.image?.url || ''}
+              onImageUploaded={(url) => updateTransportCard(index, 'url', url)}
+              onImageRemoved={() => updateTransportCard(index, 'url', '')}
+              label={`Image ${card.name || `Transport ${index + 1}`}`}
+              folder="engrd/sectors/transport"
+            />
             <div className="form-group">
               <label>Texte alternatif:</label>
               <input
@@ -655,14 +670,13 @@ const HomeContentEditor = () => {
                 onChange={(e) => updateOtherCard(index, 'name', e.target.value)}
               />
             </div>
-            <div className="form-group">
-              <label>URL de l'image:</label>
-              <input
-                type="text"
-                value={card.image?.url || ''}
-                onChange={(e) => updateOtherCard(index, 'url', e.target.value)}
-              />
-            </div>
+            <ImageUpload
+              currentImageUrl={card.image?.url || ''}
+              onImageUploaded={(url) => updateOtherCard(index, 'url', url)}
+              onImageRemoved={() => updateOtherCard(index, 'url', '')}
+              label={`Image ${card.name || `Secteur ${index + 1}`}`}
+              folder="engrd/sectors/other"
+            />
             <div className="form-group">
               <label>Texte alternatif:</label>
               <input

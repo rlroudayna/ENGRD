@@ -3,6 +3,8 @@ import "./Home.css";
 import heroVideo from "../assets/hero-video.mp4";
 import teamworkImg from "../assets/teamwork.jpg";
 import { useHomeContent } from "../hooks/useHomeContent";
+import { isVideoUrl } from "../utils/mediaUtils";
+import { getFullMediaUrl } from "../utils/urlUtils";
 
 // Importez les images pour la section Secteurs d'activités
 import AutomobileImg from "../assets/Automobile.jpg";
@@ -122,7 +124,8 @@ const Home = () => {
       {/* SECTION VIDÉO AVEC DEUX BLOCS (inchangée) */}
       <section className="hero-section">
         <video autoPlay muted loop className="hero-video" disablePictureInPicture >
-          <source src={heroContent.heroVideo?.url || heroContent.heroVideo || heroVideo} type="video/mp4" />
+          <source src={getFullMediaUrl(heroContent.heroVideo?.url || heroContent.heroVideo) || heroVideo} type="video/mp4" />
+          Votre navigateur ne supporte pas la lecture vidéo.
         </video>
 
         <div className="hero-overlay">
@@ -147,19 +150,39 @@ const Home = () => {
             </p>
           </div>
           <div className="image-side">
-            {heroContent.teamworkImage?.link ? (
-              <a href={heroContent.teamworkImage.link}>
+            {(() => {
+              const rawUrl = heroContent.teamworkImage?.url || heroContent.teamworkImage || teamworkImg;
+              const mediaUrl = getFullMediaUrl(rawUrl);
+              const isVideo = isVideoUrl(mediaUrl);
+              const altText = heroContent.teamworkImage?.alt || "ENG R&D Teamwork";
+              
+              const MediaElement = isVideo ? (
+                <video 
+                  src={mediaUrl}
+                  alt={altText}
+                  controls
+                  muted
+                  loop
+                  className="teamwork-video"
+                  style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                >
+                  Votre navigateur ne supporte pas la lecture vidéo.
+                </video>
+              ) : (
                 <img 
-                  src={heroContent.teamworkImage?.url || heroContent.teamworkImage || teamworkImg} 
-                  alt={heroContent.teamworkImage?.alt || "ENG R&D Teamwork"} 
+                  src={mediaUrl} 
+                  alt={altText} 
                 />
-              </a>
-            ) : (
-              <img 
-                src={heroContent.teamworkImage?.url || heroContent.teamworkImage || teamworkImg} 
-                alt={heroContent.teamworkImage?.alt || "ENG R&D Teamwork"} 
-              />
-            )}
+              );
+
+              return heroContent.teamworkImage?.link ? (
+                <a href={heroContent.teamworkImage.link}>
+                  {MediaElement}
+                </a>
+              ) : (
+                MediaElement
+              );
+            })()}
           </div>
         </div>
       </section>
