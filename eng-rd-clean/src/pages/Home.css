@@ -890,32 +890,24 @@ body,
   color: #718096; /* gray-500 */
   transition: color 0.3s ease;
 }
-/* Video styling for teamwork section */
-.teamwork-video {
+/* Image styling for teamwork section */
+.teamwork-image {
   width: 100%;
   height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  object-fit: cover;
 }
 
-.teamwork-video:hover {
+.teamwork-image:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Ensure video controls are visible */
-.teamwork-video::-webkit-media-controls {
-  display: flex !important;
-}
-
-.teamwork-video::-webkit-media-controls-panel {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Responsive video styling */
+/* Responsive image styling */
 @media (max-width: 768px) {
-  .teamwork-video {
+  .teamwork-image {
     border-radius: 4px;
   }
 }

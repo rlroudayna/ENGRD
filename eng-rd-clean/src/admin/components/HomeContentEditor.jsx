@@ -88,7 +88,7 @@ const HomeContentEditor = () => {
       },
       teamworkImage: {
         url: "/assets/teamwork.jpg",
-        alt: "Équipe ENG R&D au travail",
+        alt: "Image équipe ENG R&D au travail",
         link: "/contact"
       }
     };
@@ -193,34 +193,35 @@ const HomeContentEditor = () => {
         </div>
         
         <div className="card-editor">
-          <VideoUpload
-            currentVideoUrl={heroContent.teamworkImage?.url || heroContent.teamworkImage || ''}
-            onVideoUploaded={(url) => setContent(prev => ({
+          <ImageUpload
+            currentImageUrl={heroContent.teamworkImage?.url || heroContent.teamworkImage || ''}
+            onImageUploaded={(url) => setContent(prev => ({
               ...prev,
               hero: { 
                 ...heroContent, 
                 teamworkImage: typeof heroContent.teamworkImage === 'object' 
                   ? { ...heroContent.teamworkImage, url: url }
-                  : { url: url, alt: "Vidéo équipe au travail", link: "/contact" }
+                  : { url: url, alt: "Image équipe au travail", link: "/contact" }
               }
             }))}
-            onVideoRemoved={() => setContent(prev => ({
+            onImageRemoved={() => setContent(prev => ({
               ...prev,
               hero: { 
                 ...heroContent, 
                 teamworkImage: typeof heroContent.teamworkImage === 'object' 
                   ? { ...heroContent.teamworkImage, url: '' }
-                  : { url: '', alt: "Vidéo équipe au travail", link: "/contact" }
+                  : { url: '', alt: "Image équipe au travail", link: "/contact" }
               }
             }))}
-            label="Vidéo Teamwork"
+            label="Image Teamwork"
+            folder="engrd/teamwork"
           />
           <div className="form-group">
-            <label>Texte alternatif de la vidéo:</label>
+            <label>Texte alternatif de l'image:</label>
             <input
               type="text"
               value={heroContent.teamworkImage?.alt || ''}
-              placeholder="Vidéo équipe au travail"
+              placeholder="Image équipe au travail"
               onChange={(e) => setContent(prev => ({
                 ...prev,
                 hero: { 
@@ -233,7 +234,7 @@ const HomeContentEditor = () => {
             />
           </div>
           <div className="form-group">
-            <label>Lien de la vidéo (optionnel):</label>
+            <label>Lien de l'image (optionnel):</label>
             <input
               type="text"
               value={heroContent.teamworkImage?.link || ''}
@@ -244,7 +245,7 @@ const HomeContentEditor = () => {
                   ...heroContent, 
                   teamworkImage: typeof heroContent.teamworkImage === 'object' 
                     ? { ...heroContent.teamworkImage, link: e.target.value }
-                    : { url: heroContent.teamworkImage || '', alt: "Vidéo équipe au travail", link: e.target.value }
+                    : { url: heroContent.teamworkImage || '', alt: "Image équipe au travail", link: e.target.value }
                 }
               }))}
             />

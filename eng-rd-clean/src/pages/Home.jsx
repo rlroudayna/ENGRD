@@ -152,35 +152,23 @@ const Home = () => {
           <div className="image-side">
             {(() => {
               const rawUrl = heroContent.teamworkImage?.url || heroContent.teamworkImage || teamworkImg;
-              const mediaUrl = getFullMediaUrl(rawUrl);
-              const isVideo = isVideoUrl(mediaUrl);
+              const imageUrl = getFullMediaUrl(rawUrl);
               const altText = heroContent.teamworkImage?.alt || "ENG R&D Teamwork";
               
-              const MediaElement = isVideo ? (
-                <video 
-                  src={mediaUrl}
-                  alt={altText}
-                  controls
-                  muted
-                  loop
-                  className="teamwork-video"
-                  style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
-                >
-                  Votre navigateur ne supporte pas la lecture vidéo.
-                </video>
-              ) : (
+              const ImageElement = (
                 <img 
-                  src={mediaUrl} 
-                  alt={altText} 
+                  src={imageUrl} 
+                  alt={altText}
+                  className="teamwork-image"
                 />
               );
 
               return heroContent.teamworkImage?.link ? (
                 <a href={heroContent.teamworkImage.link}>
-                  {MediaElement}
+                  {ImageElement}
                 </a>
               ) : (
-                MediaElement
+                ImageElement
               );
             })()}
           </div>
