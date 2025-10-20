@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { adminClient } from '../../utils/axiosConfig';
 import VideoUpload from './VideoUpload';
 import ImageUpload from './ImageUpload';
@@ -11,11 +11,11 @@ const HomeContentEditor = () => {
   const [activeSection, setActiveSection] = useState('hero');
 
   const sections = [
-    { key: 'hero', label: 'Section Héro' },
-    { key: 'about', label: 'Qui sommes-nous' },
-    { key: 'expertise', label: 'Notre Expertise' },
-    { key: 'sectors', label: 'Secteurs d\'activités' },
-    { key: 'values', label: 'Nos Valeurs' }
+    { key: 'hero', label: 'Section Héro', icon: '🎬' },
+    { key: 'about', label: 'Qui sommes-nous', icon: '👥' },
+    { key: 'expertise', label: 'Notre Expertise', icon: '🚀' },
+    { key: 'sectors', label: 'Secteurs d\'activités', icon: '🏭' },
+    { key: 'values', label: 'Nos Valeurs', icon: '💎' }
   ];
 
   useEffect(() => {
@@ -77,188 +77,170 @@ const HomeContentEditor = () => {
 
   const renderHeroEditor = () => {
     const heroContent = content.hero || {
-      title: "Bienvenue chez ENG R&D",
+      title: "Bienvenue chez ENG RND",
       subtitle: "Votre partenaire en ingénierie automobile, expert en systèmes embarqués, modélisation et validation.",
       presentationTitle: "Votre partenaire en ingénierie automobile",
-      presentationText1: "Depuis 2018 à Casablanca, ENG R&D propose des solutions de modélisation, simulation et logiciels embarqués.",
+      presentationText1: "Depuis 2018 à Casablanca, ENG RND propose des solutions de modélisation, simulation et logiciels embarqués.",
       presentationText2: "Nous engageons performance, innovation et qualité dans tous nos projets.",
       heroVideo: {
         url: "/assets/hero-video.mp4",
-        alt: "Vidéo de présentation ENG R&D"
+        alt: "Vidéo de présentation ENG RND"
       },
       teamworkImage: {
         url: "/assets/teamwork.jpg",
-        alt: "Image équipe ENG R&D au travail",
+        alt: "Image équipe ENG RND au travail",
         link: "/contact"
       }
     };
 
     return (
       <div className="content-editor">
-        <h3>Section Héro</h3>
-        <div className="form-group">
-          <label>Titre principal:</label>
-          <input
-            type="text"
-            value={heroContent.title}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              hero: { ...heroContent, title: e.target.value }
-            }))}
-          />
-        </div>
-        <div className="form-group">
-          <label>Sous-titre:</label>
-          <textarea
-            value={heroContent.subtitle}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              hero: { ...heroContent, subtitle: e.target.value }
-            }))}
-          />
-        </div>
-        <div className="form-group">
-          <label>Titre de présentation:</label>
-          <input
-            type="text"
-            value={heroContent.presentationTitle}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              hero: { ...heroContent, presentationTitle: e.target.value }
-            }))}
-          />
-        </div>
-        <div className="form-group">
-          <label>Texte de présentation 1:</label>
-          <textarea
-            value={heroContent.presentationText1}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              hero: { ...heroContent, presentationText1: e.target.value }
-            }))}
-          />
-        </div>
-        <div className="form-group">
-          <label>Texte de présentation 2:</label>
-          <textarea
-            value={heroContent.presentationText2}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              hero: { ...heroContent, presentationText2: e.target.value }
-            }))}
-          />
-        </div>
-        
-        <h4>Images et Médias:</h4>
-        <div className="card-editor">
-          <VideoUpload
-            currentVideoUrl={heroContent.heroVideo?.url || heroContent.heroVideo || ''}
-            onVideoUploaded={(url) => setContent(prev => ({
-              ...prev,
-              hero: { 
-                ...heroContent, 
-                heroVideo: typeof heroContent.heroVideo === 'object' 
-                  ? { ...heroContent.heroVideo, url: url }
-                  : { url: url, alt: "Vidéo de présentation héro" }
-              }
-            }))}
-            onVideoRemoved={() => setContent(prev => ({
-              ...prev,
-              hero: { 
-                ...heroContent, 
-                heroVideo: typeof heroContent.heroVideo === 'object' 
-                  ? { ...heroContent.heroVideo, url: '' }
-                  : { url: '', alt: "Vidéo de présentation héro" }
-              }
-            }))}
-            label="Vidéo Héro"
-          />
-          <div className="form-group">
-            <label>Texte alternatif de la vidéo héro:</label>
-            <input
-              type="text"
-              value={heroContent.heroVideo?.alt || ''}
-              placeholder="Vidéo de présentation héro"
-              onChange={(e) => setContent(prev => ({
-                ...prev,
-                hero: { 
-                  ...heroContent, 
-                  heroVideo: typeof heroContent.heroVideo === 'object' 
-                    ? { ...heroContent.heroVideo, alt: e.target.value }
-                    : { url: heroContent.heroVideo || '', alt: e.target.value }
-                }
-              }))}
-            />
+        <div className="editor-section">
+          <h3 className="section-title">🎬 Section Héro</h3>
+          
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Titre principal:</label>
+              <input
+                type="text"
+                className="form-input"
+                value={heroContent.title}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  hero: { ...heroContent, title: e.target.value }
+                }))}
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>Sous-titre:</label>
+              <textarea
+                className="form-textarea"
+                rows="3"
+                value={heroContent.subtitle}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  hero: { ...heroContent, subtitle: e.target.value }
+                }))}
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>Titre de présentation:</label>
+              <input
+                type="text"
+                className="form-input"
+                value={heroContent.presentationTitle}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  hero: { ...heroContent, presentationTitle: e.target.value }
+                }))}
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>Texte de présentation 1:</label>
+              <textarea
+                className="form-textarea"
+                rows="3"
+                value={heroContent.presentationText1}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  hero: { ...heroContent, presentationText1: e.target.value }
+                }))}
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>Texte de présentation 2:</label>
+              <textarea
+                className="form-textarea"
+                rows="3"
+                value={heroContent.presentationText2}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  hero: { ...heroContent, presentationText2: e.target.value }
+                }))}
+              />
+            </div>
           </div>
         </div>
         
-        <div className="card-editor">
-          <ImageUpload
-            currentImageUrl={heroContent.teamworkImage?.url || heroContent.teamworkImage || ''}
-            onImageUploaded={(url) => setContent(prev => ({
-              ...prev,
-              hero: { 
-                ...heroContent, 
-                teamworkImage: typeof heroContent.teamworkImage === 'object' 
-                  ? { ...heroContent.teamworkImage, url: url }
-                  : { url: url, alt: "Image équipe au travail", link: "/contact" }
-              }
-            }))}
-            onImageRemoved={() => setContent(prev => ({
-              ...prev,
-              hero: { 
-                ...heroContent, 
-                teamworkImage: typeof heroContent.teamworkImage === 'object' 
-                  ? { ...heroContent.teamworkImage, url: '' }
-                  : { url: '', alt: "Image équipe au travail", link: "/contact" }
-              }
-            }))}
-            label="Image Teamwork"
-            folder="engrd/teamwork"
-          />
-          <div className="form-group">
-            <label>Texte alternatif de l'image:</label>
-            <input
-              type="text"
-              value={heroContent.teamworkImage?.alt || ''}
-              placeholder="Image équipe au travail"
-              onChange={(e) => setContent(prev => ({
-                ...prev,
-                hero: { 
-                  ...heroContent, 
-                  teamworkImage: typeof heroContent.teamworkImage === 'object' 
-                    ? { ...heroContent.teamworkImage, alt: e.target.value }
-                    : { url: heroContent.teamworkImage || '', alt: e.target.value, link: "/contact" }
-                }
-              }))}
-            />
-          </div>
-          <div className="form-group">
-            <label>Lien de l'image (optionnel):</label>
-            <input
-              type="text"
-              value={heroContent.teamworkImage?.link || ''}
-              placeholder="/contact"
-              onChange={(e) => setContent(prev => ({
-                ...prev,
-                hero: { 
-                  ...heroContent, 
-                  teamworkImage: typeof heroContent.teamworkImage === 'object' 
-                    ? { ...heroContent.teamworkImage, link: e.target.value }
-                    : { url: heroContent.teamworkImage || '', alt: "Image équipe au travail", link: e.target.value }
-                }
-              }))}
-            />
+        <div className="editor-section">
+          <h4 className="section-subtitle">📸 Images et Médias</h4>
+          
+          <div className="media-grid">
+            <div className="media-card">
+              <VideoUpload
+                currentVideoUrl={heroContent.heroVideo?.url || heroContent.heroVideo || ''}
+                onVideoUploaded={(url) => setContent(prev => ({
+                  ...prev,
+                  hero: { 
+                    ...heroContent, 
+                    heroVideo: typeof heroContent.heroVideo === 'object' 
+                      ? { ...heroContent.heroVideo, url: url }
+                      : { url: url, alt: "Vidéo de présentation héro" }
+                  }
+                }))}
+                onVideoRemoved={() => setContent(prev => ({
+                  ...prev,
+                  hero: { 
+                    ...heroContent, 
+                    heroVideo: typeof heroContent.heroVideo === 'object' 
+                      ? { ...heroContent.heroVideo, url: '' }
+                      : { url: '', alt: "Vidéo de présentation héro" }
+                  }
+                }))}
+                label="Vidéo Héro"
+              />
+            </div>
+            
+            <div className="media-card">
+              <ImageUpload
+                currentImageUrl={heroContent.teamworkImage?.url || heroContent.teamworkImage || ''}
+                onImageUploaded={(url) => setContent(prev => ({
+                  ...prev,
+                  hero: { 
+                    ...heroContent, 
+                    teamworkImage: typeof heroContent.teamworkImage === 'object' 
+                      ? { ...heroContent.teamworkImage, url: url }
+                      : { url: url, alt: "Image équipe au travail", link: "/contact" }
+                  }
+                }))}
+                onImageRemoved={() => setContent(prev => ({
+                  ...prev,
+                  hero: { 
+                    ...heroContent, 
+                    teamworkImage: typeof heroContent.teamworkImage === 'object' 
+                      ? { ...heroContent.teamworkImage, url: '' }
+                      : { url: '', alt: "Image équipe au travail", link: "/contact" }
+                  }
+                }))}
+                label="Image Teamwork"
+                folder="engrnd/teamwork"
+              />
+            </div>
           </div>
         </div>
         
-        <button 
-          onClick={() => saveSection('hero', content.hero || heroContent)}
-          disabled={saving}
-          className="btn btn-primary"
-        >
-          {saving ? 'Sauvegarde...' : 'Sauvegarder'}
-        </button>
+        <div className="editor-actions">
+          <button 
+            onClick={() => saveSection('hero', content.hero || heroContent)}
+            disabled={saving}
+            className="btn btn-primary"
+          >
+            {saving ? (
+              <>
+                <div className="btn-spinner"></div>
+                Sauvegarde...
+              </>
+            ) : (
+              <>
+                💾 Sauvegarder
+              </>
+            )}
+          </button>
+        </div>
       </div>
     );
   };
@@ -288,84 +270,121 @@ const HomeContentEditor = () => {
 
     return (
       <div className="content-editor">
-        <h3>Section Qui sommes-nous</h3>
-        <div className="form-group">
-          <label>Titre:</label>
-          <input
-            type="text"
-            value={aboutContent.title}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              about: { ...aboutContent, title: e.target.value }
-            }))}
-          />
-        </div>
-        <div className="form-group">
-          <label>Description:</label>
-          <textarea
-            value={aboutContent.description}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              about: { ...aboutContent, description: e.target.value }
-            }))}
-          />
-        </div>
-        <h4>Cartes:</h4>
-        {aboutContent.cards.map((card, index) => (
-          <div key={index} className="card-editor">
-            <div className="form-group">
-              <label>Icône:</label>
-              <input
-                type="text"
-                value={card.icon}
-                onChange={(e) => {
-                  const newCards = [...aboutContent.cards];
-                  newCards[index].icon = e.target.value;
-                  setContent(prev => ({
-                    ...prev,
-                    about: { ...aboutContent, cards: newCards }
-                  }));
-                }}
-              />
-            </div>
+        <div className="editor-section">
+          <h3 className="section-title">👥 Section Qui sommes-nous</h3>
+          
+          <div className="form-grid">
             <div className="form-group">
               <label>Titre:</label>
               <input
                 type="text"
-                value={card.title}
-                onChange={(e) => {
-                  const newCards = [...aboutContent.cards];
-                  newCards[index].title = e.target.value;
-                  setContent(prev => ({
-                    ...prev,
-                    about: { ...aboutContent, cards: newCards }
-                  }));
-                }}
+                className="form-input"
+                value={aboutContent.title}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  about: { ...aboutContent, title: e.target.value }
+                }))}
               />
             </div>
-            <div className="form-group">
+            
+            <div className="form-group full-width">
               <label>Description:</label>
               <textarea
-                value={card.description}
-                onChange={(e) => {
-                  const newCards = [...aboutContent.cards];
-                  newCards[index].description = e.target.value;
-                  setContent(prev => ({
-                    ...prev,
-                    about: { ...aboutContent, cards: newCards }
-                  }));
-                }}
+                className="form-textarea"
+                rows="4"
+                value={aboutContent.description}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  about: { ...aboutContent, description: e.target.value }
+                }))}
               />
             </div>
           </div>
-        ))}
-        <button 
-          onClick={() => saveSection('about', content.about || aboutContent)}
-          disabled={saving}
-          className="btn btn-primary"
-        >
-          {saving ? 'Sauvegarde...' : 'Sauvegarder'}
-        </button>
+        </div>
+
+        <div className="editor-section">
+          <h4 className="section-subtitle">🎯 Cartes de présentation</h4>
+          
+          <div className="cards-grid">
+            {aboutContent.cards.map((card, index) => (
+              <div key={index} className="card-editor">
+                <div className="card-editor-header">
+                  <span className="card-number">Carte {index + 1}</span>
+                </div>
+                
+                <div className="form-group">
+                  <label>Icône:</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={card.icon}
+                    onChange={(e) => {
+                      const newCards = [...aboutContent.cards];
+                      newCards[index].icon = e.target.value;
+                      setContent(prev => ({
+                        ...prev,
+                        about: { ...aboutContent, cards: newCards }
+                      }));
+                    }}
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Titre:</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={card.title}
+                    onChange={(e) => {
+                      const newCards = [...aboutContent.cards];
+                      newCards[index].title = e.target.value;
+                      setContent(prev => ({
+                        ...prev,
+                        about: { ...aboutContent, cards: newCards }
+                      }));
+                    }}
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Description:</label>
+                  <textarea
+                    className="form-textarea"
+                    rows="3"
+                    value={card.description}
+                    onChange={(e) => {
+                      const newCards = [...aboutContent.cards];
+                      newCards[index].description = e.target.value;
+                      setContent(prev => ({
+                        ...prev,
+                        about: { ...aboutContent, cards: newCards }
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="editor-actions">
+          <button 
+            onClick={() => saveSection('about', content.about || aboutContent)}
+            disabled={saving}
+            className="btn btn-primary"
+          >
+            {saving ? (
+              <>
+                <div className="btn-spinner"></div>
+                Sauvegarde...
+              </>
+            ) : (
+              <>
+                💾 Sauvegarder
+              </>
+            )}
+          </button>
+        </div>
       </div>
     );
   };
@@ -384,54 +403,87 @@ const HomeContentEditor = () => {
 
     return (
       <div className="content-editor">
-        <h3>Section Notre Expertise</h3>
-        <div className="form-group">
-          <label>Pré-titre:</label>
-          <input
-            type="text"
-            value={expertiseContent.preTitle}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              expertise: { ...expertiseContent, preTitle: e.target.value }
-            }))}
-          />
-        </div>
-        <div className="form-group">
-          <label>Titre:</label>
-          <input
-            type="text"
-            value={expertiseContent.title}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              expertise: { ...expertiseContent, title: e.target.value }
-            }))}
-          />
-        </div>
-        <h4>Cartes d'expertise:</h4>
-        {expertiseContent.cards.map((card, index) => (
-          <div key={index} className="form-group">
-            <label>Carte {index + 1}:</label>
-            <input
-              type="text"
-              value={card.text}
-              onChange={(e) => {
-                const newCards = [...expertiseContent.cards];
-                newCards[index].text = e.target.value;
-                setContent(prev => ({
+        <div className="editor-section">
+          <h3 className="section-title">🚀 Section Notre Expertise</h3>
+          
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Pré-titre:</label>
+              <input
+                type="text"
+                className="form-input"
+                value={expertiseContent.preTitle}
+                onChange={(e) => setContent(prev => ({
                   ...prev,
-                  expertise: { ...expertiseContent, cards: newCards }
-                }));
-              }}
-            />
+                  expertise: { ...expertiseContent, preTitle: e.target.value }
+                }))}
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>Titre:</label>
+              <input
+                type="text"
+                className="form-input"
+                value={expertiseContent.title}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  expertise: { ...expertiseContent, title: e.target.value }
+                }))}
+              />
+            </div>
           </div>
-        ))}
-        <button 
-          onClick={() => saveSection('expertise', content.expertise || expertiseContent)}
-          disabled={saving}
-          className="btn btn-primary"
-        >
-          {saving ? 'Sauvegarde...' : 'Sauvegarder'}
-        </button>
+        </div>
+
+        <div className="editor-section">
+          <h4 className="section-subtitle">⚡ Cartes d'expertise</h4>
+          
+          <div className="expertise-grid">
+            {expertiseContent.cards.map((card, index) => (
+              <div key={index} className="expertise-card">
+                <div className="expertise-card-header">
+                  <span className="expertise-number">{index + 1}</span>
+                  <span className="expertise-label">Expertise {index + 1}</span>
+                </div>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-input"
+                    placeholder="Nom de l'expertise"
+                    value={card.text}
+                    onChange={(e) => {
+                      const newCards = [...expertiseContent.cards];
+                      newCards[index].text = e.target.value;
+                      setContent(prev => ({
+                        ...prev,
+                        expertise: { ...expertiseContent, cards: newCards }
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="editor-actions">
+          <button 
+            onClick={() => saveSection('expertise', content.expertise || expertiseContent)}
+            disabled={saving}
+            className="btn btn-primary"
+          >
+            {saving ? (
+              <>
+                <div className="btn-spinner"></div>
+                Sauvegarde...
+              </>
+            ) : (
+              <>
+                💾 Sauvegarder
+              </>
+            )}
+          </button>
+        </div>
       </div>
     );
   };
@@ -459,80 +511,118 @@ const HomeContentEditor = () => {
 
     return (
       <div className="content-editor">
-        <h3>Section Nos Valeurs</h3>
-        <div className="form-group">
-          <label>Titre:</label>
-          <input
-            type="text"
-            value={valuesContent.title}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              values: { ...valuesContent, title: e.target.value }
-            }))}
-          />
-        </div>
-        <div className="form-group">
-          <label>Sous-titre:</label>
-          <input
-            type="text"
-            value={valuesContent.subtitle}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              values: { ...valuesContent, subtitle: e.target.value }
-            }))}
-          />
-        </div>
-        <div className="form-group">
-          <label>Description:</label>
-          <textarea
-            value={valuesContent.description}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              values: { ...valuesContent, description: e.target.value }
-            }))}
-          />
-        </div>
-        <h4>Cartes de valeurs:</h4>
-        {valuesContent.cards.map((card, index) => (
-          <div key={index} className="card-editor">
+        <div className="editor-section">
+          <h3 className="section-title">💎 Section Nos Valeurs</h3>
+          
+          <div className="form-grid">
             <div className="form-group">
               <label>Titre:</label>
               <input
                 type="text"
-                value={card.title}
-                onChange={(e) => {
-                  const newCards = [...valuesContent.cards];
-                  newCards[index].title = e.target.value;
-                  setContent(prev => ({
-                    ...prev,
-                    values: { ...valuesContent, cards: newCards }
-                  }));
-                }}
+                className="form-input"
+                value={valuesContent.title}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  values: { ...valuesContent, title: e.target.value }
+                }))}
               />
             </div>
+            
             <div className="form-group">
+              <label>Sous-titre:</label>
+              <input
+                type="text"
+                className="form-input"
+                value={valuesContent.subtitle}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  values: { ...valuesContent, subtitle: e.target.value }
+                }))}
+              />
+            </div>
+            
+            <div className="form-group full-width">
               <label>Description:</label>
               <textarea
-                value={card.description}
-                onChange={(e) => {
-                  const newCards = [...valuesContent.cards];
-                  newCards[index].description = e.target.value;
-                  setContent(prev => ({
-                    ...prev,
-                    values: { ...valuesContent, cards: newCards }
-                  }));
-                }}
+                className="form-textarea"
+                rows="4"
+                value={valuesContent.description}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  values: { ...valuesContent, description: e.target.value }
+                }))}
               />
             </div>
           </div>
-        ))}
-        <button 
-          onClick={() => saveSection('values', content.values || valuesContent)}
-          disabled={saving}
-          className="btn btn-primary"
-        >
-          {saving ? 'Sauvegarde...' : 'Sauvegarder'}
-        </button>
+        </div>
+
+        <div className="editor-section">
+          <h4 className="section-subtitle">🌟 Cartes de valeurs</h4>
+          
+          <div className="values-grid">
+            {valuesContent.cards.map((card, index) => (
+              <div key={index} className="value-card">
+                <div className="value-card-header">
+                  <span className="value-icon">🏆</span>
+                  <span className="value-label">Valeur {index + 1}</span>
+                </div>
+                
+                <div className="form-group">
+                  <label>Titre:</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={card.title}
+                    onChange={(e) => {
+                      const newCards = [...valuesContent.cards];
+                      newCards[index].title = e.target.value;
+                      setContent(prev => ({
+                        ...prev,
+                        values: { ...valuesContent, cards: newCards }
+                      }));
+                    }}
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Description:</label>
+                  <textarea
+                    className="form-textarea"
+                    rows="3"
+                    value={card.description}
+                    onChange={(e) => {
+                      const newCards = [...valuesContent.cards];
+                      newCards[index].description = e.target.value;
+                      setContent(prev => ({
+                        ...prev,
+                        values: { ...valuesContent, cards: newCards }
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="editor-actions">
+          <button 
+            onClick={() => saveSection('values', content.values || valuesContent)}
+            disabled={saving}
+            className="btn btn-primary"
+          >
+            {saving ? (
+              <>
+                <div className="btn-spinner"></div>
+                Sauvegarde...
+              </>
+            ) : (
+              <>
+                💾 Sauvegarder
+              </>
+            )}
+          </button>
+        </div>
       </div>
     );
   };
@@ -543,9 +633,31 @@ const HomeContentEditor = () => {
       title: "Secteurs d'activités",
       transport: {
         title: "Transport",
-        cards: []
+        cards: [
+          { name: "Automobile", image: { url: "/assets/Automobile.jpg", alt: "Automobile", link: "/jobs?sector=automobile" } },
+          { name: "Aéronautique", image: { url: "/assets/Aeronautics.png", alt: "Aéronautique", link: "/jobs?sector=aeronautique" } },
+          { name: "Ferroviaire", image: { url: "/assets/Ferroviaire.jpg", alt: "Ferroviaire", link: "/jobs?sector=ferroviaire" } },
+          { name: "Spatial", image: { url: "/assets/Spatial.jpg", alt: "Spatial", link: "/jobs?sector=spatial" } },
+          { name: "Militaire", image: { url: "/assets/Military.jpg", alt: "Militaire", link: "/jobs?sector=militaire" } }
+        ]
       },
-      other: []
+      other: [
+        { name: "Énergie", image: { url: "/assets/Energy.png", alt: "Énergie", link: "/jobs?sector=energie" } },
+        { name: "Santé", image: { url: "/assets/Sante.jpg", alt: "Santé", link: "/jobs?sector=sante" } },
+        { name: "IT", image: { url: "/assets/IT.png", alt: "IT", link: "/jobs?sector=it" } },
+        { name: "RH", image: { url: "/assets/RH.png", alt: "Ressources Humaines", link: "/jobs?sector=rh" } },
+        { name: "Marketing", image: { url: "/assets/Marketing.png", alt: "Marketing", link: "/jobs?sector=marketing" } },
+        { name: "Finance", image: { url: "/assets/Finance.png", alt: "Finance", link: "/jobs?sector=finance" } },
+        { name: "Commercial", image: { url: "/assets/Commercial.png", alt: "Commercial", link: "/jobs?sector=commercial" } },
+        { name: "Communication", image: { url: "/assets/Communication.png", alt: "Communication", link: "/jobs?sector=communication" } },
+        { name: "Juridique", image: { url: "/assets/Juridique.png", alt: "Juridique", link: "/jobs?sector=juridique" } },
+        { name: "Qualité", image: { url: "/assets/Quality.png", alt: "Qualité", link: "/jobs?sector=qualite" } },
+        { name: "Logistique", image: { url: "/assets/Logistique.png", alt: "Logistique", link: "/jobs?sector=logistique" } },
+        { name: "Production", image: { url: "/assets/Production.png", alt: "Production", link: "/jobs?sector=production" } },
+        { name: "R&D", image: { url: "/assets/RD.png", alt: "Recherche et Développement", link: "/jobs?sector=rd" } },
+        { name: "Consulting", image: { url: "/assets/Consulting.png", alt: "Conseil", link: "/jobs?sector=consulting" } },
+        { name: "Formation", image: { url: "/assets/Formation.png", alt: "Formation", link: "/jobs?sector=formation" } }
+      ]
     };
 
     const updateTransportCard = (index, field, value) => {
@@ -581,130 +693,142 @@ const HomeContentEditor = () => {
 
     return (
       <div className="content-editor">
-        <h3>Section Secteurs d'activités</h3>
-        <div className="form-group">
-          <label>Pré-titre:</label>
-          <input
-            type="text"
-            value={sectorsContent.preTitle}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              sectors: { ...sectorsContent, preTitle: e.target.value }
-            }))}
-          />
-        </div>
-        <div className="form-group">
-          <label>Titre:</label>
-          <input
-            type="text"
-            value={sectorsContent.title}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              sectors: { ...sectorsContent, title: e.target.value }
-            }))}
-          />
-        </div>
-
-        <h4>Secteur Transport:</h4>
-        <div className="form-group">
-          <label>Titre du secteur transport:</label>
-          <input
-            type="text"
-            value={sectorsContent.transport?.title || ''}
-            onChange={(e) => setContent(prev => ({
-              ...prev,
-              sectors: {
-                ...sectorsContent,
-                transport: { ...sectorsContent.transport, title: e.target.value }
-              }
-            }))}
-          />
-        </div>
-
-        {sectorsContent.transport?.cards?.map((card, index) => (
-          <div key={index} className="card-editor">
-            <h5>Carte Transport {index + 1}</h5>
+        <div className="editor-section">
+          <h3 className="section-title">🏭 Section Secteurs d'activités</h3>
+          
+          <div className="form-grid">
             <div className="form-group">
-              <label>Nom:</label>
+              <label>Pré-titre:</label>
               <input
                 type="text"
-                value={card.name || ''}
-                onChange={(e) => updateTransportCard(index, 'name', e.target.value)}
+                className="form-input"
+                value={sectorsContent.preTitle}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  sectors: { ...sectorsContent, preTitle: e.target.value }
+                }))}
               />
             </div>
-            <ImageUpload
-              currentImageUrl={card.image?.url || ''}
-              onImageUploaded={(url) => updateTransportCard(index, 'url', url)}
-              onImageRemoved={() => updateTransportCard(index, 'url', '')}
-              label={`Image ${card.name || `Transport ${index + 1}`}`}
-              folder="engrd/sectors/transport"
-            />
+            
             <div className="form-group">
-              <label>Texte alternatif:</label>
+              <label>Titre:</label>
               <input
                 type="text"
-                value={card.image?.alt || ''}
-                onChange={(e) => updateTransportCard(index, 'alt', e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Lien:</label>
-              <input
-                type="text"
-                value={card.image?.link || ''}
-                placeholder="/jobs?sector=automobile"
-                onChange={(e) => updateTransportCard(index, 'link', e.target.value)}
+                className="form-input"
+                value={sectorsContent.title}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  sectors: { ...sectorsContent, title: e.target.value }
+                }))}
               />
             </div>
           </div>
-        ))}
+        </div>
 
-        <h4>Autres Secteurs:</h4>
-        {sectorsContent.other?.map((card, index) => (
-          <div key={index} className="card-editor">
-            <h5>Secteur {index + 1}</h5>
-            <div className="form-group">
-              <label>Nom:</label>
-              <input
-                type="text"
-                value={card.name || ''}
-                onChange={(e) => updateOtherCard(index, 'name', e.target.value)}
-              />
-            </div>
-            <ImageUpload
-              currentImageUrl={card.image?.url || ''}
-              onImageUploaded={(url) => updateOtherCard(index, 'url', url)}
-              onImageRemoved={() => updateOtherCard(index, 'url', '')}
-              label={`Image ${card.name || `Secteur ${index + 1}`}`}
-              folder="engrd/sectors/other"
+        <div className="editor-section">
+          <h4 className="section-subtitle">🚗 Secteur Transport</h4>
+          
+          <div className="form-group">
+            <label>Titre du secteur transport:</label>
+            <input
+              type="text"
+              className="form-input"
+              value={sectorsContent.transport?.title || ''}
+              onChange={(e) => setContent(prev => ({
+                ...prev,
+                sectors: {
+                  ...sectorsContent,
+                  transport: { ...sectorsContent.transport, title: e.target.value }
+                }
+              }))}
             />
-            <div className="form-group">
-              <label>Texte alternatif:</label>
-              <input
-                type="text"
-                value={card.image?.alt || ''}
-                onChange={(e) => updateOtherCard(index, 'alt', e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Lien:</label>
-              <input
-                type="text"
-                value={card.image?.link || ''}
-                placeholder="/jobs?sector=energie"
-                onChange={(e) => updateOtherCard(index, 'link', e.target.value)}
-              />
-            </div>
           </div>
-        ))}
 
-        <button 
-          onClick={() => saveSection('sectors', content.sectors || sectorsContent)}
-          disabled={saving}
-          className="btn btn-primary"
-        >
-          {saving ? 'Sauvegarde...' : 'Sauvegarder'}
-        </button>
+          <div className="sectors-grid">
+            {sectorsContent.transport?.cards?.map((card, index) => (
+              <div key={index} className="sector-card">
+                <div className="sector-card-header">
+                  <span className="sector-icon">🚗</span>
+                  <span className="sector-label">{card.name || `Transport ${index + 1}`}</span>
+                </div>
+                
+                <div className="form-group">
+                  <label>Nom:</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={card.name || ''}
+                    onChange={(e) => updateTransportCard(index, 'name', e.target.value)}
+                  />
+                </div>
+                
+                <div className="image-upload-container">
+                  <ImageUpload
+                    currentImageUrl={card.image?.url || ''}
+                    onImageUploaded={(url) => updateTransportCard(index, 'url', url)}
+                    onImageRemoved={() => updateTransportCard(index, 'url', '')}
+                    label={`Image ${card.name || `Transport ${index + 1}`}`}
+                    folder="engrnd/sectors/transport"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="editor-section">
+          <h4 className="section-subtitle">🌐 Autres Secteurs</h4>
+          
+          <div className="sectors-grid">
+            {sectorsContent.other?.map((card, index) => (
+              <div key={index} className="sector-card">
+                <div className="sector-card-header">
+                  <span className="sector-icon">🏢</span>
+                  <span className="sector-label">{card.name || `Secteur ${index + 1}`}</span>
+                </div>
+                
+                <div className="form-group">
+                  <label>Nom:</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={card.name || ''}
+                    onChange={(e) => updateOtherCard(index, 'name', e.target.value)}
+                  />
+                </div>
+                
+                <div className="image-upload-container">
+                  <ImageUpload
+                    currentImageUrl={card.image?.url || ''}
+                    onImageUploaded={(url) => updateOtherCard(index, 'url', url)}
+                    onImageRemoved={() => updateOtherCard(index, 'url', '')}
+                    label={`Image ${card.name || `Secteur ${index + 1}`}`}
+                    folder="engrnd/sectors/other"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="editor-actions">
+          <button 
+            onClick={() => saveSection('sectors', content.sectors || sectorsContent)}
+            disabled={saving}
+            className="btn btn-primary"
+          >
+            {saving ? (
+              <>
+                <div className="btn-spinner"></div>
+                Sauvegarde...
+              </>
+            ) : (
+              <>
+                💾 Sauvegarder
+              </>
+            )}
+          </button>
+        </div>
       </div>
     );
   };
@@ -729,17 +853,48 @@ const HomeContentEditor = () => {
   if (loading) {
     return (
       <div className="admin-main">
-        <div className="loading-spinner"></div>
-        <p>Chargement du contenu...</p>
+        <div className="admin-header">
+          <div className="admin-header-content">
+            <h1 className="admin-title">
+              <span className="admin-icon">🏠</span>
+              Gestion du Contenu
+            </h1>
+            <p className="admin-subtitle">
+              Modification du contenu de la page d'accueil
+            </p>
+          </div>
+        </div>
+        <div className="admin-content">
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <p>Chargement du contenu...</p>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="admin-main">
+      <div className="admin-header">
+        <div className="admin-header-content">
+          <h1 className="admin-title">
+            <span className="admin-icon">🏠</span>
+            Gestion du Contenu
+          </h1>
+          <p className="admin-subtitle">
+            Modification du contenu de la page d'accueil
+          </p>
+        </div>
+        <div className="admin-header-stats">
+          <div className="stat-card">
+            <div className="stat-number">{Object.keys(content).length}</div>
+            <div className="stat-label">Sections configurées</div>
+          </div>
+        </div>
+      </div>
+
       <div className="admin-content">
-        <h1>Gestion du Contenu de la Page d'Accueil</h1>
-        
         <div className="section-tabs">
           {sections.map(section => (
             <button
@@ -747,12 +902,15 @@ const HomeContentEditor = () => {
               className={`tab-button ${activeSection === section.key ? 'active' : ''}`}
               onClick={() => setActiveSection(section.key)}
             >
-              {section.label}
+              <span className="tab-icon">{section.icon}</span>
+              <span className="tab-label">{section.label}</span>
             </button>
           ))}
         </div>
 
-        {renderSectionEditor()}
+        <div className="content-editor-container">
+          {renderSectionEditor()}
+        </div>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useImageUpload } from '../../hooks/useImageUpload';
 import './AdminStyles.css';
 
-const ImageUpload = ({ currentImageUrl, onImageUploaded, onImageRemoved, label = "Image", folder = "engrd/images" }) => {
+const ImageUpload = ({ currentImageUrl, onImageUploaded, onImageRemoved, label = "Image", folder = "engrnd/images" }) => {
   const fileInputRef = useRef(null);
   const [dragActive, setDragActive] = useState(false);
   const { uploadImage, deleteImage, uploading, progress, error, setError } = useImageUpload();

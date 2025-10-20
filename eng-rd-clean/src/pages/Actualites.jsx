@@ -1,8 +1,8 @@
 // src/pages/Actualites.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // ⭐ NOUVEAU : Importe Link pour les liens "Voir plus"
-import '../App.css'; // Assurez-vous d'avoir un fichier App.css pour les styles généraux
+import { Link } from 'react-router-dom';
+import './Actualites.css';
 
 export default function Actualites() {
   const [news, setNews] = useState([]);
@@ -34,33 +34,86 @@ export default function Actualites() {
   }
 
   return (
-    <div className="page-content">
-      <h1 className="page-title">Nos Actualités </h1>
-      {news.length === 0 ? (
-        <p className="no-content-message">Aucune actualité n'est disponible pour le moment. Revenez bientôt !</p>
-      ) : (
-        <div className="news-grid">
-          {news.map((item) => (
-            <div key={item._id} className="news-card">
-              {item.imageUrl && (
-                <img 
-                  src={item.imageUrl} 
-                  alt={item.title} 
-                  className="news-image" 
-                  onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/400x250/cccccc/333333?text=Image+non+disponible"; }} // Image de secours
-                />
-              )}
-              <div className="card-content">
-                <h2 className="card-title">{item.title}</h2>
-                <p className="card-date">Publié le : {new Date(item.publishedAt).toLocaleDateString('fr-FR')}</p>
-                <p className="card-description">{item.content.substring(0, 150)}...</p> {/* Affiche un extrait */}
-                {/* ⭐ NOUVEAU : Lien "Voir plus" vers la page de détail */}
-                <Link to={`/news/${item._id}`} className="read-more-button">Voir plus</Link>
-              </div>
-            </div>
-          ))}
+    <div className="actualites-page">
+      {/* Header de la page */}
+      <header className="actualites-header">
+        <div className="actualites-header-content">
+          <h1 className="actualites-title">
+            Nos <span className="title-highlight">Actualités</span>
+          </h1>
+          <p className="actualites-subtitle">
+            Découvrez les dernières nouvelles et innovations d'ENG RND
+          </p>
         </div>
-      )}
+      </header>
+
+      {/* Contenu principal */}
+      <div className="actualites-container">
+        {loading && (
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <p>Chargement des actualités...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="error-container">
+            <h3>Erreur de chargement</h3>
+            <p>{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && news.length === 0 && (
+          <div className="no-content-container">
+            <h3>Aucune actualité disponible</h3>
+            <p>Revenez bientôt pour découvrir nos dernières nouvelles !</p>
+          </div>
+        )}
+
+        {!loading && !error && news.length > 0 && (
+          <div className="news-grid">
+            {news.map((item) => (
+              <article key={item._id} className="news-card">
+                {item.imageUrl && (
+                  <div className="news-image-container">
+                    <img 
+                      src={item.imageUrl} 
+                      alt={item.title} 
+                      className="news-image" 
+                      onError={(e) => { 
+                        e.target.onerror = null; 
+                        e.target.src="https://placehold.co/400x250/7fcc72/ffffff?text=ENG+R%26D"; 
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="news-content">
+                  <div className="news-meta">
+                    <time className="news-date">
+                      {new Date(item.publishedAt).toLocaleDateString('fr-FR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </time>
+                  </div>
+                  <h2 className="news-title">{item.title}</h2>
+                  <p className="news-excerpt">
+                    {item.content.length > 150 
+                      ? `${item.content.substring(0, 150)}...` 
+                      : item.content
+                    }
+                  </p>
+                  <Link to={`/news/${item._id}`} className="read-more-btn">
+                    Lire la suite
+                    <span className="btn-arrow">→</span>
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

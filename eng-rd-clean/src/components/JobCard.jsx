@@ -30,6 +30,8 @@ const JobCard = ({ job }) => {
     }
   };
 
+
+
   return (
     <div className="job-card">
       <div className="job-type-badge" style={{ backgroundColor: getTypeColor(job.type) }}>
@@ -37,7 +39,8 @@ const JobCard = ({ job }) => {
       </div>
 
       <h3>{job.title}</h3>
-      <p>{job.location}</p>
+      <p className="job-sector">{job.sector || 'Secteur non spécifié'}</p>
+      <p className="job-location">{job.location}</p>
 
       <div className="job-card-buttons">
         <button onClick={handleViewDetails}>Voir plus</button>

@@ -3,7 +3,6 @@ import "./Home.css";
 import heroVideo from "../assets/hero-video.mp4";
 import teamworkImg from "../assets/teamwork.jpg";
 import { useHomeContent } from "../hooks/useHomeContent";
-import { isVideoUrl } from "../utils/mediaUtils";
 import { getFullMediaUrl } from "../utils/urlUtils";
 
 // Importez les images pour la section Secteurs d'activités
@@ -22,10 +21,10 @@ const Home = () => {
 
   // Default content
   const defaultHeroContent = {
-    title: "Bienvenue chez ENG R&D",
+    title: "Bienvenue chez ENG RND",
     subtitle: "Votre partenaire en ingénierie automobile, expert en systèmes embarqués, modélisation et validation.",
     presentationTitle: "Votre partenaire en ingénierie automobile",
-    presentationText1: "Depuis 2018 à Casablanca, ENG R&D propose des solutions de modélisation, simulation et logiciels embarqués.",
+    presentationText1: "Depuis 2018 à Casablanca, ENG RND propose des solutions de modélisation, simulation et logiciels embarqués.",
     presentationText2: "Nous engageons performance, innovation et qualité dans tous nos projets."
   };
 
@@ -68,17 +67,17 @@ const Home = () => {
     transport: {
       title: "Transport",
       cards: [
-        { name: "Automobile", image: { url: AutomobileImg, alt: "Automobile", link: "/jobs?sector=automobile" } },
-        { name: "Aéronautique", image: { url: AeronauticsImg, alt: "Aéronautique", link: "/jobs?sector=aeronautique" } },
-        { name: "Ferroviaire", image: { url: FerroviaireImg, alt: "Ferroviaire", link: "/jobs?sector=ferroviaire" } },
-        { name: "Spatial", image: { url: SpatialImg, alt: "Spatial", link: "/jobs?sector=spatial" } },
-        { name: "Militaire", image: { url: MilitaryImg, alt: "Militaire", link: "/jobs?sector=militaire" } }
+        { name: "Automobile", image: { url: AutomobileImg, alt: "Automobile" } },
+        { name: "Aéronautique", image: { url: AeronauticsImg, alt: "Aéronautique" } },
+        { name: "Ferroviaire", image: { url: FerroviaireImg, alt: "Ferroviaire" } },
+        { name: "Spatial", image: { url: SpatialImg, alt: "Spatial" } },
+        { name: "Militaire", image: { url: MilitaryImg, alt: "Militaire" } }
       ]
     },
     other: [
-      { name: "Énergie", image: { url: EnergyImg, alt: "Énergie", link: "/jobs?sector=energie" } },
-      { name: "Santé", image: { url: SanteImg, alt: "Santé", link: "/jobs?sector=sante" } },
-      { name: "IT", image: { url: ITImg, alt: "IT", link: "/jobs?sector=it" } }
+      { name: "Énergie", image: { url: EnergyImg, alt: "Énergie" } },
+      { name: "Santé", image: { url: SanteImg, alt: "Santé" } },
+      { name: "IT", image: { url: ITImg, alt: "IT" } }
     ]
   };
 
@@ -150,27 +149,11 @@ const Home = () => {
             </p>
           </div>
           <div className="image-side">
-            {(() => {
-              const rawUrl = heroContent.teamworkImage?.url || heroContent.teamworkImage || teamworkImg;
-              const imageUrl = getFullMediaUrl(rawUrl);
-              const altText = heroContent.teamworkImage?.alt || "ENG R&D Teamwork";
-              
-              const ImageElement = (
-                <img 
-                  src={imageUrl} 
-                  alt={altText}
-                  className="teamwork-image"
-                />
-              );
-
-              return heroContent.teamworkImage?.link ? (
-                <a href={heroContent.teamworkImage.link}>
-                  {ImageElement}
-                </a>
-              ) : (
-                ImageElement
-              );
-            })()}
+            <img 
+              src={getFullMediaUrl(heroContent.teamworkImage?.url || heroContent.teamworkImage) || teamworkImg}
+              alt={heroContent.teamworkImage?.alt || "ENG RND Teamwork"}
+              className="teamwork-image"
+            />
           </div>
         </div>
       </section>
@@ -258,55 +241,28 @@ const Home = () => {
             <div className="sector-subgrid">
               {sectorsContent.transport?.cards?.map((card, index) => (
                 <div key={index} className="sector-card">
-                  {card.image?.link ? (
-                    <a href={card.image.link}>
-                      <img src={card.image?.url || card.image} alt={card.image?.alt || card.name} />
-                      <div className="sector-overlay">
-                        <p>{card.name}</p>
-                      </div>
-                    </a>
-                  ) : (
-                    <>
-                      <img src={card.image?.url || card.image} alt={card.image?.alt || card.name} />
-                      <div className="sector-overlay">
-                        <p>{card.name}</p>
-                      </div>
-                    </>
-                  )}
+                  <img src={card.image?.url || card.image} alt={card.image?.alt || card.name} />
+                  <div className="sector-overlay">
+                    <p>{card.name}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Rubriques Énergie, Santé, IT sur la même ligne */}
-          <div className="sector-category sector-category-aligned">
-            {/* Conteneur pour les titres alignés */}
-            <div className="aligned-titles">
-              {sectorsContent.other?.map((card, index) => (
-                <h3 key={index}>{card.name}</h3>
-              ))}
-            </div>
-            <div className="sector-subgrid aligned-cards-grid">
-              {sectorsContent.other?.map((card, index) => (
-                <div key={index} className="sector-card">
-                  {card.image?.link ? (
-                    <a href={card.image.link}>
-                      <img src={card.image?.url || card.image} alt={card.image?.alt || card.name} />
-                      <div className="sector-overlay">
-                        <p>{card.name}</p>
-                      </div>
-                    </a>
-                  ) : (
-                    <>
-                      <img src={card.image?.url || card.image} alt={card.image?.alt || card.name} />
-                      <div className="sector-overlay">
-                        <p>{card.name}</p>
-                      </div>
-                    </>
-                  )}
+          {/* Rubriques Énergie, Santé, IT alignées */}
+          <div className="sector-category-aligned">
+            {sectorsContent.other?.map((card, index) => (
+              <div key={index} className="sector-column">
+                <h3>{card.name}</h3>
+                <div className="sector-card">
+                  <img src={card.image?.url || card.image} alt={card.image?.alt || card.name} />
+                  <div className="sector-overlay">
+                    <p>{card.name}</p>
+                  </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

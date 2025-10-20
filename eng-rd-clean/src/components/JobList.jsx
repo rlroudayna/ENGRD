@@ -1,5 +1,5 @@
 // src/components/JobList.jsx
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import JobCard from "./JobCard";
 import "./JobList.css";
@@ -7,7 +7,9 @@ import "./JobList.css";
 export default function JobList() {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
-  const [filters, setFilters] = useState({ keyword: "", location: "", type: [] });
+  const [filters, setFilters] = useState({ keyword: "", location: "", type: [], sector: "" });
+
+
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/jobs")
@@ -35,7 +37,8 @@ export default function JobList() {
       const keywordMatch = job.title.toLowerCase().includes(filters.keyword.toLowerCase());
       const locationMatch = job.location.toLowerCase().includes(filters.location.toLowerCase());
       const typeMatch = filters.type.length ? filters.type.includes(job.type) : true;
-      return keywordMatch && locationMatch && typeMatch;
+      const sectorMatch = filters.sector ? job.sector === filters.sector : true;
+      return keywordMatch && locationMatch && typeMatch && sectorMatch;
     });
     setFilteredJobs(results);
   }, [filters, jobs]);
@@ -43,24 +46,72 @@ export default function JobList() {
   return (
     <div className="joblist-container">
       <div className="filters">
-        <input
-          type="text"
-          name="keyword"
-          placeholder="Mots-clés"
-          onChange={handleFilterChange}
-        />
-        <input
-          type="text"
-          name="location"
-          placeholder="Localisation"
-          onChange={handleFilterChange}
-        />
+        <div className="filters-grid">
+          <div className="filter-group">
+            <label className="filter-label">Recherche</label>
+            <input
+              type="text"
+              name="keyword"
+              placeholder="Titre du poste, compétences..."
+              onChange={handleFilterChange}
+            />
+          </div>
+          
+          <div className="filter-group">
+            <label className="filter-label">Localisation</label>
+            <input
+              type="text"
+              name="location"
+              placeholder="Ville, région..."
+              onChange={handleFilterChange}
+            />
+          </div>
+          
+          <div className="filter-group">
+            <label className="filter-label">Secteur d'activité</label>
+            <select name="sector" onChange={handleFilterChange} value={filters.sector} className="modern-select">
+              <option value="">🌐 Tous les secteurs</option>
+              <option value="Automobile">🚗 Automobile</option>
+              <option value="Aéronautique">✈️ Aéronautique</option>
+              <option value="Ferroviaire">🚄 Ferroviaire</option>
+              <option value="Spatial">🚀 Spatial</option>
+              <option value="Militaire">🛡️ Militaire</option>
+              <option value="Énergie">⚡ Énergie</option>
+              <option value="Santé">🏥 Santé</option>
+              <option value="IT">💻 IT</option>
+              <option value="RH">👥 Ressources Humaines</option>
+              <option value="Marketing">📈 Marketing</option>
+              <option value="Finance">💰 Finance</option>
+              <option value="Commercial">🤝 Commercial</option>
+              <option value="Communication">📢 Communication</option>
+              <option value="Juridique">⚖️ Juridique</option>
+              <option value="Qualité">✅ Qualité</option>
+              <option value="Logistique">📦 Logistique</option>
+              <option value="Production">🏭 Production</option>
+              <option value="R&D">🔬 Recherche & Développement</option>
+              <option value="Consulting">💼 Conseil</option>
+              <option value="Formation">🎓 Formation</option>
+            </select>
+          </div>
+        </div>
+
         <div className="checkboxes">
-          <label><input type="checkbox" value="CDI" onChange={handleFilterChange} /> CDI</label>
-          {/* Ajout de la case à cocher pour le CDD */}
-          <label><input type="checkbox" value="CDD" onChange={handleFilterChange} /> CDD</label>
-          <label><input type="checkbox" value="Freelance" onChange={handleFilterChange} /> Freelance</label>
-          <label><input type="checkbox" value="Stage" onChange={handleFilterChange} /> Stage</label>
+          <div className="checkbox-group">
+            <input type="checkbox" value="CDI" onChange={handleFilterChange} id="cdi" />
+            <label htmlFor="cdi" className="checkbox-label">CDI</label>
+          </div>
+          <div className="checkbox-group">
+            <input type="checkbox" value="CDD" onChange={handleFilterChange} id="cdd" />
+            <label htmlFor="cdd" className="checkbox-label">CDD</label>
+          </div>
+          <div className="checkbox-group">
+            <input type="checkbox" value="Freelance" onChange={handleFilterChange} id="freelance" />
+            <label htmlFor="freelance" className="checkbox-label">Freelance</label>
+          </div>
+          <div className="checkbox-group">
+            <input type="checkbox" value="Stage" onChange={handleFilterChange} id="stage" />
+            <label htmlFor="stage" className="checkbox-label">Stage</label>
+          </div>
         </div>
       </div>
 
@@ -68,7 +119,12 @@ export default function JobList() {
         {filteredJobs.map(job => (
           <JobCard key={job._id} job={job} />
         ))}
-        {filteredJobs.length === 0 && <p className="no-results">Aucune offre ne correspond à votre recherche.</p>}
+        {filteredJobs.length === 0 && (
+          <div className="no-results">
+            <h3>Aucune offre trouvée</h3>
+            <p>Essayez de modifier vos critères de recherche pour voir plus d'offres.</p>
+          </div>
+        )}
       </div>
     </div>
   );

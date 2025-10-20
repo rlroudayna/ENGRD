@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Pour récupérer l'ID de l'offre depuis l'URL
 import axios from 'axios';
 import ApplicationForm from '../components/ApplicationForm'; // Importe le composant de formulaire centralisé
-import '../App.css'; // Pour les styles généraux (.apply, .apply-title)
+import '../components/ApplicationForm.css';
 
 const ApplyToOffer = () => {
   const { id: jobId } = useParams(); // Récupère l'ID de l'offre depuis l'URL (renommé en jobId)
@@ -49,26 +49,29 @@ const ApplyToOffer = () => {
 
   if (loadingJob) {
     return (
-      <div className="apply">
-        <h2 className="apply-title">Chargement de l'offre...</h2>
-        <p style={{textAlign: 'center'}}>Veuillez patienter.</p>
+      <div className="apply-page">
+        <div className="loading-container">
+          <h2 className="loading-title">Chargement de l'offre...</h2>
+          <p className="loading-message">Veuillez patienter pendant que nous récupérons les détails de l'offre.</p>
+        </div>
       </div>
     );
   }
 
   if (jobError) {
     return (
-      <div className="apply">
-        <h2 className="apply-title" style={{color: 'red'}}>Erreur</h2>
-        <p style={{textAlign: 'center'}}>{jobError}</p>
+      <div className="apply-page">
+        <div className="error-container">
+          <h2 className="error-title">Erreur</h2>
+          <p className="error-message">{jobError}</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="apply"> {/* Utilise la classe .apply pour le style */}
-      <h2 className="apply-title">Candidature pour l'offre : <br/>"{jobTitle}"</h2>
-      <ApplicationForm jobId={jobId} /> {/* Passe le jobId au composant de formulaire */}
+    <div className="apply-page">
+      <ApplicationForm jobId={jobId} jobTitle={jobTitle} />
     </div>
   );
 };

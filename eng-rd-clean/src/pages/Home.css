@@ -430,25 +430,31 @@ body,
 
 /* Styles spécifiques pour les rubriques alignées (Énergie, Santé, IT) */
 .sector-category-aligned {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    align-items: start;
+}
+
+.sector-column {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
-.aligned-titles {
-    display: flex;
-    justify-content: space-around; /* Espace les titres */
-    margin-bottom: 25px; /* Espace entre les titres et les cartes */
-    flex-wrap: wrap; /* Permet aux titres de passer à la ligne */
-    gap: 20px; /* Espace entre les titres */
-}
-
-.aligned-titles h3 {
-    flex: 1 1 auto; /* Permet aux titres de s'adapter */
-    text-align: center; /* Centrer chaque titre */
-    min-width: 150px; /* Largeur minimale pour les titres */
-    font-size: 1.6rem; /* Ajuster la taille des titres */
-    border-bottom: 2px solid var(--primary); /* Ligne verte sous chaque titre */
+.sector-column h3 {
+    font-size: 1.6rem;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary);
     padding-bottom: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.sector-column .sector-card {
+    width: 100%;
+    margin: 0;
 }
 
 .aligned-cards-grid {
@@ -909,5 +915,30 @@ body,
 @media (max-width: 768px) {
   .teamwork-image {
     border-radius: 4px;
+  }
+}/* R
+esponsive pour les secteurs alignés */
+@media (max-width: 1024px) {
+  .sector-category-aligned {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sector-category-aligned {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .sector-column h3 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sector-column h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
   }
 }

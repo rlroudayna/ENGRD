@@ -9,8 +9,8 @@ router.post('/', async (req, res) => {
     const { name, email, subject, message } = req.body;
 
     // Validation basique
-    if (!name || !email || !message) {
-      return res.status(400).json({ message: 'Le nom, l\'email et le message sont obligatoires.' });
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ message: 'Le nom, l\'email, l\'objet et le message sont obligatoires.' });
     }
 
     const newMessage = new Message({

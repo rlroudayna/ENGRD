@@ -59,7 +59,7 @@ export default function Navbar() {
     <nav className="navbar" ref={navRef}>
       <div className="navbar-container">
         <Link to="/" className="navbar-logo" onClick={scrollToTop}>
-          <img src={logo} alt="ENG R&D" className="logo-img" />
+          <img src={logo} alt="ENG RND" className="logo-img" />
         </Link>
 
         {/* Bouton hamburger pour le menu mobile */}
@@ -80,7 +80,7 @@ export default function Navbar() {
               {/* Le clic sur le lien "Qui sommes-nous" déclenche le défilement */}
               <span
                 className="dropdown-main-link"
-                onClick={() => scrollToSection("qui-sommes-nous")}
+                onClick={() => scrollToSection("about")}
               >
                 Qui sommes-nous
               </span>

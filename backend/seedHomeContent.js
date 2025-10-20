@@ -61,40 +61,35 @@ const defaultContent = {
                     name: "Automobile",
                     image: {
                         url: "/assets/Automobile.jpg",
-                        alt: "Secteur Automobile",
-                        link: "/jobs?sector=automobile"
+                        alt: "Secteur Automobile"
                     }
                 },
                 {
                     name: "Aéronautique",
                     image: {
                         url: "/assets/Aeronautics.png",
-                        alt: "Secteur Aéronautique",
-                        link: "/jobs?sector=aeronautique"
+                        alt: "Secteur Aéronautique"
                     }
                 },
                 {
                     name: "Ferroviaire",
                     image: {
                         url: "/assets/Ferroviaire.jpg",
-                        alt: "Secteur Ferroviaire",
-                        link: "/jobs?sector=ferroviaire"
+                        alt: "Secteur Ferroviaire"
                     }
                 },
                 {
                     name: "Spatial",
                     image: {
                         url: "/assets/Spatial.jpg",
-                        alt: "Secteur Spatial",
-                        link: "/jobs?sector=spatial"
+                        alt: "Secteur Spatial"
                     }
                 },
                 {
                     name: "Militaire",
                     image: {
                         url: "/assets/Military.jpg",
-                        alt: "Secteur Militaire",
-                        link: "/jobs?sector=militaire"
+                        alt: "Secteur Militaire"
                     }
                 }
             ]
@@ -104,24 +99,21 @@ const defaultContent = {
                 name: "Énergie",
                 image: {
                     url: "/assets/Energy.png",
-                    alt: "Secteur Énergie",
-                    link: "/jobs?sector=energie"
+                    alt: "Secteur Énergie"
                 }
             },
             {
                 name: "Santé",
                 image: {
                     url: "/assets/Sante.jpg",
-                    alt: "Secteur Santé",
-                    link: "/jobs?sector=sante"
+                    alt: "Secteur Santé"
                 }
             },
             {
                 name: "IT",
                 image: {
                     url: "/assets/IT.png",
-                    alt: "Secteur IT",
-                    link: "/jobs?sector=it"
+                    alt: "Secteur IT"
                 }
             }
         ]
